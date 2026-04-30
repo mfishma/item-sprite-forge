@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ItemSprite Forge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette extracted from Design System */
+            --mc-bg-dark: #313233; /* Dark UI Background */
+            --mc-bg-darker: #1e1e1f; /* Deep background */
+            
+            --mc-btn-green: #3c8527;
+            --mc-btn-green-light: #52d334; /* Highlight */
+            --mc-btn-green-dark: #1e4812; /* Shadow */
+            
+            --mc-btn-gray: #c6c6c6;
+            --mc-btn-gray-light: #ffffff;
+            --mc-btn-gray-dark: #555555;
+            
+            --mc-btn-dark: #3b3b3b;
+            --mc-btn-dark-light: #6a6a6a;
+            --mc-btn-dark-shadow: #212121;
+            
+            --mc-outline: #000000;
+
+            /* Typography */
+            --font-display: 'Press Start 2P', cursive;
+            --font-body: 'VT323', monospace;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #111111; /* Deep void background */
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e4e4e7;
+            overflow-x: hidden;
+            font-size: 18px; /* Base size for VT323 readability */
+        }
+
+        /* Utility Classes for Fonts */
+        .font-display {
+            font-family: var(--font-display);
+        }
+        
+        .font-pixel {
+            font-family: var(--font-body);
+        }
+
+        .mc-text-shadow {
+            text-shadow: 2px 2px 0px #1e1e1e;
+        }
+
+        /* --- MINECRAFT BUTTONS --- */
+        /* Standard 2px Border Logic: 
+           Outer: 2px solid Black
+           Inner: Top/Left Light, Bottom/Right Dark 
+        */
+
+        .mc-btn-green {
+            background-color: var(--mc-btn-green);
+            border: 2px solid var(--mc-outline);
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-green-light),
+                inset -2px -2px 0px var(--mc-btn-green-dark);
+            color: #fff;
+            font-family: var(--font-body);
+            text-shadow: 2px 2px 0px #1e4812;
+            cursor: pointer;
+            transition: filter 0.1s;
+            text-transform: uppercase;
+        }
+        .mc-btn-green:hover:not(:disabled) {
+            filter: brightness(1.1);
+        }
+        .mc-btn-green:active:not(:disabled) {
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-green-dark), /* Inverted for click effect */
+                inset -2px -2px 0px var(--mc-btn-green-light);
+            transform: translateY(2px);
+        }
+        .mc-btn-green:disabled {
+            filter: grayscale(1) brightness(0.5);
+            cursor: not-allowed;
+        }
+
+        .mc-btn-gray {
+            background-color: var(--mc-btn-gray);
+            border: 2px solid var(--mc-outline);
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-gray-light),
+                inset -2px -2px 0px var(--mc-btn-gray-dark);
+            color: #212121;
+            font-family: var(--font-body);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .mc-btn-gray:hover {
+            background-color: #dcdcdc;
+        }
+        .mc-btn-gray:active {
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-gray-dark),
+                inset -2px -2px 0px var(--mc-btn-gray-light);
+        }
+
+        /* Dark UI Button (like the 'Label' buttons on dark panels) */
+        .mc-btn-dark {
+            background-color: var(--mc-btn-dark);
+            border: 2px solid var(--mc-outline);
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-dark-light),
+                inset -2px -2px 0px var(--mc-btn-dark-shadow);
+            color: #e0e0e0;
+            font-family: var(--font-body);
+            text-shadow: 2px 2px 0px #000;
+            text-transform: uppercase;
+        }
+        .mc-btn-dark:hover {
+            filter: brightness(1.2);
+        }
+        .mc-btn-dark.active {
+            background-color: #2a2a2a;
+            box-shadow: 
+                inset 2px 2px 0px var(--mc-btn-dark-shadow),
+                inset -2px -2px 0px var(--mc-btn-dark-light);
+             color: #ffff55; /* Minecraft Yellow for active state */
+        }
+
+        /* --- PANELS --- */
+        .mc-panel {
+            background-color: #c6c6c6; /* Fallback light */
+            background-color: var(--mc-bg-dark); /* Dark Mode */
+            border: 2px solid var(--mc-outline);
+            box-shadow: 
+                inset 2px 2px 0px rgba(255,255,255,0.1),
+                inset -2px -2px 0px rgba(0,0,0,0.3);
+        }
+
+        /* --- INPUTS --- */
+        .mc-input {
+            background-color: #000000;
+            border: 2px solid #555555; /* Dark gray border */
+            box-shadow: inset 2px 2px 0px #000; /* Deep inset */
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+        }
+        .mc-input:focus {
+            border-color: #ffffff;
+            outline: none;
+        }
+
+        /* --- UTILS --- */
+        .pixelated {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Custom Scrollbar to match Dark UI */
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border: 2px solid #111;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
