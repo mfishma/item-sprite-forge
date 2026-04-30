@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface KeyModalProps {
@@ -8,82 +7,70 @@ interface KeyModalProps {
 }
 
 const KeyModal: React.FC<KeyModalProps> = ({ isOpen, onClose, onSave }) => {
-  const [key, setKey] = useState('');
+  const [keyInput, setKeyInput] = useState('');
 
   if (!isOpen) return null;
 
   return (
-    <dialog 
-      open 
-      role="dialog" 
-      aria-modal="true" 
-      aria-labelledby="modal-title"
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 m-0 w-full h-full max-w-none max-h-none border-none"
-    >
-      <div className="w-full max-w-md mc-panel p-6 bg-[#313233] border-4 border-black shadow-[inset_4px_4px_0px_#555,inset_-4px_-4px_0px_#222]">
-        <h2 id="modal-title" className="text-2xl font-pixel text-[#ffff55] mc-text-shadow uppercase mb-4 text-center">
-          Authentication Required
-        </h2>
-        
-        <div className="space-y-4 font-pixel">
-          <p className="text-[#d4d4d4] text-lg leading-tight">
-            To generate sprites on this site, you need a <span className="text-white">Gemini API Key</span>.
-          </p>
-          
-          <div className="bg-[#111] p-3 border-2 border-[#555] rounded-sm">
-            <p className="text-[#aaffaa] text-sm mb-2">
-              PRO TIP: You can get a <span className="underline italic">FREE</span> key (up to 15 images/min) in seconds from Google:
-            </p>
-            <a 
-              href="https://aistudio.google.com/app/apikey" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-[#55ffff] hover:underline break-all text-xs"
-            >
-              aistudio.google.com/app/apikey
-            </a>
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div className="bg-[#2a2a2a] border-4 border-[#1a1a1a] shadow-[-10px_10px_0px_rgba(0,0,0,0.5)] w-full max-w-md p-6 relative">
+        {/* Close Button */}
+        <button 
+          onClick={onClose}
+          className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-600 hover:bg-red-500 text-white font-pixel border-2 border-black active:scale-95 transition-transform"
+        >
+          X
+        </button>
 
-          <div className="space-y-1">
-            <label htmlFor="key-input" className="text-sm font-bold text-[#d4d4d4] uppercase">
-              Enter API Key:
-            </label>
+        <h2 className="text-2xl font-pixel text-white mb-4">API KEY REQUIRED</h2>
+        
+        <div className="space-y-4">
+          <p className="text-zinc-300 text-sm leading-relaxed">
+            To generate sprites, you need a free Gemini API Key. Get one from Google AI Studio and paste it below.
+          </p>
+
+          <a 
+            href="https://aistudio.google.com/app/apikey" 
+            target="_blank" 
+            rel="noreferrer"
+            className="block w-full text-center py-2 bg-[#4a4a4a] hover:bg-[#5a5a5a] text-[#55ffff] font-pixel border-2 border-black shadow-[ inset_-2px_-2px_0px_rgba(0,0,0,0.5),_inset_2px_2px_0px_rgba(255,255,255,0.2) ] active:scale-[0.98]"
+          >
+            GET API KEY
+          </a>
+
+          <div className="space-y-2">
+            <label htmlFor="apiKey" className="font-pixel text-[#888] text-sm block uppercase">Enter Key</label>
             <input
-              id="key-input"
+              id="apiKey"
               type="password"
-              value={key}
-              onChange={(e) => setKey(e.target.value)}
+              value={keyInput}
+              onChange={(e) => setKeyInput(e.target.value)}
               placeholder="AIzaSy..."
-              className="w-full mc-input p-3 text-lg font-pixel placeholder:opacity-30"
-              autoFocus
+              className="w-full bg-[#1a1a1a] border-2 border-[#111] text-white p-3 font-mono focus:outline-none focus:border-[#55ffff]"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && keyInput.trim()) {
+                  onSave(keyInput.trim());
+                }
+              }}
             />
             <div className="flex items-start gap-2 mt-2 px-1">
               <span className="text-[#55ffff] text-sm" role="img" aria-label="shield">🛡️</span>
-              <p className="text-xs text-[#b3b3b3] leading-tight uppercase font-bold tracking-tighter">
-                Your key is stored <span className="text-[#ffff55]">strictly locally</span> in your browser. 
-                It is sent <span className="text-white">directly to Google</span> and never touches our servers.
+              <p className="text-xs text-[#b3b3b3] leading-snug uppercase font-bold tracking-tight">
+                <span className="text-[#ffff55]">SECURITY NOTICE:</span> Your key is securely saved <span className="text-white">ONLY</span> in your browser. It is <span className="text-[#aaffaa]">never transmitted to us</span> and cannot be seen outside of your browser session. It communicates directly with Google's API.
               </p>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-4 pt-2">
-            <button 
-              onClick={onClose}
-              className="mc-btn-gray py-3 text-lg"
-            >
-              Cancel
-            </button>
-            <button 
-              onClick={() => onSave(key)}
-              disabled={!key.trim()}
-              className="mc-btn-green py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Connect
-            </button>
-          </div>
+          
+          <button 
+            onClick={() => onSave(keyInput.trim())}
+            disabled={!keyInput.trim()}
+            className="w-full mt-4 py-3 bg-[#55ff55] hover:bg-[#77ff77] disabled:bg-[#3a3a3a] disabled:text-[#666] text-black font-pixel font-bold text-lg border-2 border-black active:scale-[0.98] transition-transform"
+          >
+            SAVE KEY
+          </button>
         </div>
       </div>
-    </dialog>
+    </div>
   );
 };
 

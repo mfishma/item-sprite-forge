@@ -3,12 +3,11 @@ import { GoogleGenAI } from "@google/genai";
 import { SpriteParams } from "../types";
 import { getFewShotExamples } from "../data/referenceLibrary";
 
-const MODEL_NAME = 'gemini-2.5-flash-image';
 const TEXT_MODEL_NAME = 'gemini-3-flash-preview';
 
 const getApiKey = () => {
   const localKey = localStorage.getItem('GEMINI_API_KEY');
-  return localKey || process.env.API_KEY || '';
+  return localKey || process.env.GEMINI_API_KEY || '';
 };
 
 export const generateSprite = async (prompt: string, params: SpriteParams, referenceImage?: string, isRevision: boolean = false) => {
@@ -72,7 +71,7 @@ export const generateSprite = async (prompt: string, params: SpriteParams, refer
     ORIENTATION: ${params.orientation === 'adaptive' ? 'Infer from description' : (params.orientation === 'diagonal' ? 'DIAGONAL (Bottom-Left to Top-Right)' : params.orientation)}.`;
 
   // --- FEW-SHOT LEARNING INJECTION ---
-  const contents: any = { parts: [] };
+  const contents: { parts: { text?: string; inlineData?: { data: string; mimeType: string } }[] } = { parts: [] };
   
   // 1. Add System Prompt
   contents.parts.push({ text: finalPrompt });
@@ -235,7 +234,7 @@ export const checkModelAvailability = async (): Promise<string[]> => {
     const response = await ai.models.list();
     if (response && response.models) {
         // Strip 'models/' prefix if present and return names
-        return response.models.map((m: any) => m.name.replace('models/', ''));
+        return response.models.map((m: { name: string }) => m.name.replace('models/', ''));
     }
     return [];
   } catch (e) {

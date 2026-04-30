@@ -14,11 +14,11 @@ const Header: React.FC<HeaderProps> = ({ onChangeKey }) => {
            <div className="w-5 h-5 bg-[#3c8527]"></div>
         </div>
         
-        <div>
-          <h1 className="text-xl md:text-2xl text-[#ffffff] mc-text-shadow font-display tracking-tight leading-none uppercase">
+        <div className="flex flex-col justify-center py-1">
+          <h1 className="text-lg md:text-xl text-[#ffffff] mc-text-shadow font-pixel tracking-tight leading-normal uppercase">
             ItemSprite Forge
           </h1>
-          <p className="text-xs text-[#d4d4d4] font-bold uppercase tracking-wider mt-1 font-pixel">
+          <p className="text-[10px] text-[#d4d4d4] font-bold uppercase tracking-wider font-pixel">
             Vanilla Asset Director <span className="text-[#ffff55]">v1.1</span>
           </p>
         </div>

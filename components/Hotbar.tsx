@@ -6,24 +6,24 @@ interface HotbarProps {
   currentIteration: SpriteIteration | null;
 }
 
-const Hotbar: React.FC<HotbarProps> = ({ currentIteration }) => {
-  const Slot = ({ children, isSelected = false }: { children?: React.ReactNode, isSelected?: boolean }) => (
-    <div className={`
-      relative w-12 h-12 flex items-center justify-center
-      bg-[#8b8b8b] border-2 border-black
-      ${isSelected ? 'ring-4 ring-white z-10 scale-110 shadow-xl' : ''}
-    `}
-    style={{
-      boxShadow: 'inset -2px -2px 0px #ffffff, inset 2px 2px 0px #373737'
-    }}
-    aria-hidden={!isSelected}
-    >
-      {children}
-    </div>
-  );
+const Slot = ({ children, isSelected = false }: { children?: React.ReactNode, isSelected?: boolean }) => (
+  <div className={`
+    relative w-12 h-12 flex items-center justify-center
+    bg-[#8b8b8b] border-2 border-black
+    ${isSelected ? 'ring-4 ring-white z-10 scale-110 shadow-xl' : ''}
+  `}
+  style={{
+    boxShadow: 'inset -2px -2px 0px #ffffff, inset 2px 2px 0px #373737'
+  }}
+  aria-hidden={!isSelected}
+  >
+    {children}
+  </div>
+);
 
+const Hotbar: React.FC<HotbarProps> = ({ currentIteration }) => {
   return (
-    <div className="flex flex-col items-center gap-2 md:gap-4 py-3 md:py-6 w-full" role="region" aria-labelledby="hotbar-heading">
+    <div className="flex flex-col items-center gap-2 md:gap-3 py-3 md:py-4 w-full" role="region" aria-labelledby="hotbar-heading">
       <h2 id="hotbar-heading" className="text-lg font-pixel uppercase text-zinc-400 tracking-widest">
         In-Game Hotbar Preview
       </h2>

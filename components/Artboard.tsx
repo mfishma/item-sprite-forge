@@ -58,11 +58,11 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
     <div className="w-full flex flex-col items-center gap-3 md:gap-4 max-w-2xl px-2 md:px-4">
       {/* Sprite Viewer */}
       <div className="relative group" role="region" aria-label="Sprite Preview">
-        <div className="mc-panel p-6 overflow-hidden bg-[#2a2a2a] border-4 border-black shadow-[inset_4px_4px_0px_#555,inset_-4px_-4px_0px_-#111]">
+        <div className="mc-panel p-4 md:p-6 overflow-hidden bg-[#2a2a2a] border-4 border-black shadow-[inset_4px_4px_0px_#555,inset_-4px_-4px_0px_-#111]">
           <div className="relative">
              {/* Transparency Passthrough Container */}
             <div 
-              className="w-48 h-48 xl:w-64 xl:h-64 border-2 border-[#111] bg-[#1a1a1a] pixelated overflow-hidden relative box-content shadow-[inset_4px_4px_0px_#000]"
+              className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 border-2 border-[#111] bg-[#1a1a1a] pixelated overflow-hidden relative box-content shadow-[inset_4px_4px_0px_#000]"
               style={{
                 transform: `scale(${zoom})`,
                 transition: 'transform 0.1s steps(4)',

@@ -95,8 +95,18 @@ const App: React.FC = () => {
     }
   };
 
-  const parseError = (err: any): string => {
-    const msg = err.message || JSON.stringify(err);
+  const parseError = (err: unknown): string => {
+    if (err instanceof Error) {
+      const msg = err.message;
+      if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
+        return 'Rate limit exceeded. The free tier may be busy. Please try again in a moment, or consider adding your own API key in the settings.';
+      }
+      if (msg.includes('fetch')) {
+         return 'Network error. Please check your connection and ensure your API key is valid.';
+      }
+      return msg;
+    }
+    const msg = String(err);
     if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
       return 'QUOTA_EXHAUSTED';
     }
@@ -116,7 +126,6 @@ const App: React.FC = () => {
     try {
       let resultRaw = '';
       let finalPrompt = prompt;
-      let generatedName = itemName; 
 
       // Determine context name for the AI namer
       const contextName = currentIteration ? currentIteration.name : '';
@@ -194,7 +203,7 @@ const App: React.FC = () => {
       if (!currentIteration) {
         setPrompt(''); 
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       const parsed = parseError(err);
       setError(parsed);
       setState(AppState.ERROR);
@@ -243,7 +252,7 @@ const App: React.FC = () => {
         setIterations(prev => [newIteration, ...prev]);
         setCurrentIterationIdx(0);
         setState(AppState.IDLE);
-    } catch (err: any) {
+    } catch (err: unknown) {
         const parsed = parseError(err);
         setError(parsed);
         setState(AppState.ERROR);

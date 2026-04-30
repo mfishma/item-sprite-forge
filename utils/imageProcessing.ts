@@ -235,7 +235,8 @@ export const regenerateOutline = (dataUrl: string): Promise<string> => {
             const rgbToHsl = (r: number, g: number, b: number) => {
                 r /= 255; g /= 255; b /= 255;
                 const max = Math.max(r, g, b), min = Math.min(r, g, b);
-                let h = 0, s = 0, l = (max + min) / 2;
+                const l = (max + min) / 2;
+                let h = 0, s = 0;
 
                 if (max !== min) {
                     const d = max - min;
@@ -427,7 +428,7 @@ export const generateSmartFilename = (iteration: SpriteIteration): string => {
 
   if (tokens.length === 0) return `item_${Math.floor(Math.random() * 1000)}`;
 
-  let parts = tokens.slice(0, 2);
+  const parts = tokens.slice(0, 2);
   if (tokens[2] && (tokens[2].length <= 3 || /\d/.test(tokens[2]))) {
       parts.push(tokens[2]);
   }

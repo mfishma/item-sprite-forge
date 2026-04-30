@@ -233,7 +233,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <select 
                     id="complexity-select"
                     value={params.complexity}
-                    onChange={(e) => setParams({...params, complexity: e.target.value as any})}
+                    onChange={(e) => setParams({...params, complexity: e.target.value as SpriteParams['complexity']})}
                     className="mc-input p-2 text-lg font-pixel"
                   >
                     <option value="adaptive">Auto</option>
@@ -246,7 +246,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <select 
                     id="orientation-select"
                     value={params.orientation}
-                    onChange={(e) => setParams({...params, orientation: e.target.value as any})}
+                    onChange={(e) => setParams({...params, orientation: e.target.value as SpriteParams['orientation']})}
                     className="mc-input p-2 text-lg font-pixel"
                   >
                     <option value="adaptive">Auto</option>
@@ -264,7 +264,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <select 
                     id="outline-select"
                     value={params.outlineStyle}
-                    onChange={(e) => setParams({...params, outlineStyle: e.target.value as any})}
+                    onChange={(e) => setParams({...params, outlineStyle: e.target.value as SpriteParams['outlineStyle']})}
                     className="mc-input p-2 text-lg w-full font-pixel"
                   >
                     <option value="adaptive">Auto (AI Best Fit)</option>
@@ -278,7 +278,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <select 
                     id="model-select"
                     value={params.model || 'gemini-2.5-flash-image'}
-                    onChange={(e) => setParams({...params, model: e.target.value as any})}
+                    onChange={(e) => setParams({...params, model: e.target.value as SpriteParams['model']})}
                     className="mc-input p-2 text-lg w-full font-pixel"
                   >
                     <option value="gemini-2.5-flash-image">Gemini 2.5 (Fast/Free)</option>
