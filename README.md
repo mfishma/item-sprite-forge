@@ -1,4 +1,4 @@
-![ItemSprite Forge](./docs/itemsprite_forge.png)
+![ItemSprite Forge](./docs/itemsprite_forge_title.png)
 # ItemSprite Forge
 Minecraft asset generation & refinement engine
 
