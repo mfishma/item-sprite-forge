@@ -38,28 +38,29 @@ graph TD
 
 ## 3. User Flow
 
-The application enforces a non-linear but highly structured workflow:
+The application enforces a non-linear but highly structured workflow.
 
 1.  **Initialization**: 
-    The user inputs a base constraint (e.g., "A raw emerald ore chunk with stone debris") or uploads a reference image.
-2.  **Configuration**: 
-    The user selects model parameters (Model tier, Material & Type, Outline Style, View Angle).
+    The user inputs a natural language (NL) prompt (e.g., "A raw emerald ore chunk with stone debris") describing the item they want to forge, or uploads an initial reference image.
+2.  **Configuration (Settings)**: 
+    The user configures structural and aesthetic settings from the sidebar (e.g., AI Model tier, overall complexity, orientation, outline style). These chosen settings automatically strictly format and condition the final prompt sent to the AI.
 3.  **Generation (The Forge)**: 
-    The request is compiled and sent. The resulting asset is loaded onto the primary Artboard.
-4.  **Refinement Loop**:
-    *   **Variant Generation**: Create a sibling asset using the same prompt but an altered seed/temperature path.
-    *   **Touch-Up**: The user specifies a corrective prompt (e.g., "Remove the stray pixels on the bottom left").
-    *   **Instant Actions**: Deterministic operations (Simplify, Symmetry, Maximize, Fix Outline) are applied instantly via automated prompt wrappers.
+    The request is compiled and sent. The resulting asset is loaded onto the primary Artboard as the first version in the item's history structure.
+4.  **Refinement Loop (Iterative Versioning)**:
+    *   **Variant Generation**: Create a sibling version using the same prompt and settings but an altered seed/temperature path.
+    *   **Touch-Up**: The user specifies a corrective natural language prompt (e.g., "Make the sword blade slightly longer and thinner") to apply a delta to the current version, outputting a new iteration.
+    *   **Instant Actions**: Deterministic operations (Simplify, Symmetry, Maximize, Fix Outline) are applied instantly via automated prompt wrappers, acting as one-click modifiers that yield new versions.
+    *   **History Navigation**: The user can scrub through a linear history track of generated versions, allowing them to switch back to and branch off of previous iterations if a refinement strays too far.
 5.  **Validation**:
-    The asset is previewed dynamically in the "In-Game Hotbar" component against standard backgrounds.
+    The active asset version is previewed dynamically in the "In-Game Hotbar" component against standard generic game backgrounds to verify contrast and readability.
 6.  **Export**: 
-    The finalized sprite is downloaded as a web-optimized, transparent `.png`.
+    The finalized sprite is downloaded as a web-optimized, transparent `.png` ready for commercial or personal engine use.
 
 ---
 
 ## 4. Prompt Engineering Strategies
 
-The core of ItemSprite Forge relies on heavily constrained system instructions rather than unstructured natural language.
+The core of ItemSprite Forge relies on heavily constrained system instructions rather than unstructured natural language. We take the user's base NL prompt and heavily augment it under the hood.
 
 ### A. Strict Typology Enforcement
 The system prompt strictly demands a `16x16` pixel-art aesthetic. We use constraints like:
@@ -100,3 +101,15 @@ When a user requests a variant, the current sprite is passed explicitly as an `I
     ```bash
     npm run build
     ```
+
+---
+
+## 6. License
+
+Copyright (c) 2026 mfishma
+
+This project is licensed under a custom **Attribution-NonCommercial** license based on the MIT License structure. 
+
+This means that you are free to use, modify, and distribute the code for **personal or educational purposes** as long as you provide visible credit (attribution). However, you **may not use this code for commercial purposes** or monetary gain. 
+
+See the [LICENSE.md](LICENSE.md) file for more details.

@@ -35,9 +35,9 @@ const Header: React.FC<HeaderProps> = ({ onChangeKey }) => {
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 010 2 1 1 0 100-2 2 2 0 010-2z" clipRule="evenodd" /></svg>
         </button>
 
-        <button className="mc-btn-dark px-4 py-2 text-lg hidden sm:block uppercase">
-          Docs
-        </button>
+        <a href="https://github.com/mfishma/item-sprite-forge#readme" target="_blank" rel="noopener noreferrer" className="mc-btn-dark px-4 py-2 text-lg hidden sm:block uppercase text-center flex-col justify-center no-underline hover:text-white text-[#d4d4d4]">
+          View README
+        </a>
         <button className="mc-btn-gray px-4 py-2 text-lg font-bold uppercase">
           Export Pack
         </button>

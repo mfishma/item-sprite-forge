@@ -1,6 +1,7 @@
 {
   "name": "itemsprite-forge",
   "private": true,
+  "license": "LicenseRef-LICENSE.md",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
