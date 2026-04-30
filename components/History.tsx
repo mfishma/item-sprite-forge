@@ -65,7 +65,7 @@ const History: React.FC<HistoryProps> = ({ iterations, currentIndex, onSelect })
                           V.{iter.version}
                         </span>
                         {iter.parentVersion && (
-                            <span className="text-[10px] text-[#9ca3af] font-bold font-pixel">
+                            <span className="text-xs text-[#9ca3af] font-bold font-pixel">
                                 from V.{iter.parentVersion}
                             </span>
                         )}

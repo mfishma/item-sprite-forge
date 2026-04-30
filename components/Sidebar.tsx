@@ -108,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             aria-pressed={evolutionMode === 'remix'}
           >
             <span>Variant</span>
-            <span className="text-[10px] opacity-60 normal-case font-pixel">New Version</span>
+            <span className="text-xs opacity-60 normal-case font-pixel">New Version</span>
           </button>
           <button
             onClick={() => setEvolutionMode('refine')}
@@ -116,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             aria-pressed={evolutionMode === 'refine'}
           >
             <span>Touch-Up</span>
-            <span className="text-[10px] opacity-60 normal-case font-pixel">Fix Pixels</span>
+            <span className="text-xs opacity-60 normal-case font-pixel">Fix Pixels</span>
           </button>
         </div>
       )}
@@ -186,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div className="flex items-center gap-2">
               <span id="fine-tune-heading" className="text-lg font-pixel text-[#e0e0e0] uppercase">Fine-Tune Settings</span>
             </div>
-            <span className="text-xs font-bold text-[#aaaaaa]" aria-hidden="true">{showAdvanced ? '[-]' : '[+]'}</span>
+            <span className="text-xs font-bold text-[#cccccc]" aria-hidden="true">{showAdvanced ? '[-]' : '[+]'}</span>
           </button>
 
           {showAdvanced && (
@@ -312,8 +312,8 @@ const Sidebar: React.FC<SidebarProps> = ({
             ) : (
               <label className="relative flex flex-col items-center justify-center w-full h-24 mc-input border-2 border-dashed border-[#555] cursor-pointer hover:bg-[#111] transition-all focus-within:ring-2 focus-within:ring-white focus-within:border-white">
                 <div className="flex flex-col items-center justify-center pt-2 pb-2">
-                  <span className="text-2xl text-[#888] mb-1" aria-hidden="true">+</span>
-                  <p className="text-xs font-bold text-[#888] uppercase font-pixel">Upload Reference</p>
+                  <span className="text-2xl text-[#b3b3b3] mb-1" aria-hidden="true">+</span>
+                  <p className="text-xs font-bold text-[#b3b3b3] uppercase font-pixel">Upload Reference</p>
                 </div>
                 <input 
                     type="file" 

@@ -23,7 +23,7 @@ const Hotbar: React.FC<HotbarProps> = ({ currentIteration }) => {
   );
 
   return (
-    <div className="flex flex-col items-center gap-4 py-6 w-full" role="region" aria-labelledby="hotbar-heading">
+    <div className="flex flex-col items-center gap-2 md:gap-4 py-3 md:py-6 w-full" role="region" aria-labelledby="hotbar-heading">
       <h2 id="hotbar-heading" className="text-lg font-pixel uppercase text-zinc-400 tracking-widest">
         In-Game Hotbar Preview
       </h2>

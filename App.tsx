@@ -301,7 +301,7 @@ const App: React.FC = () => {
         </div>
 
         <div className="flex-1 bg-[#212121] flex flex-col items-center relative overflow-y-auto custom-scrollbar shadow-[inset_0px_0px_20px_#000]">
-          <div className="w-full flex-1 flex flex-col items-center justify-center p-4 lg:p-8 min-h-[500px]">
+          <div className="w-full flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0">
             {error && (
               <div className="absolute top-4 left-4 right-4 bg-[#500] border-2 border-red-500 text-white px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 z-50 font-pixel shadow-[0_10px_20px_rgba(0,0,0,0.5)] animate-in slide-in-from-top-2">
                 <div className="flex items-center gap-3">

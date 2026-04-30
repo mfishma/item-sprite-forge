@@ -55,17 +55,18 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
   const displayLabel = iteration?.actionType ? "Applied Action" : "Source Prompt";
 
   return (
-    <div className="w-full flex flex-col items-center gap-4 max-w-2xl px-4">
+    <div className="w-full flex flex-col items-center gap-3 md:gap-4 max-w-2xl px-2 md:px-4">
       {/* Sprite Viewer */}
       <div className="relative group" role="region" aria-label="Sprite Preview">
         <div className="mc-panel p-6 overflow-hidden bg-[#2a2a2a] border-4 border-black shadow-[inset_4px_4px_0px_#555,inset_-4px_-4px_0px_-#111]">
           <div className="relative">
              {/* Transparency Passthrough Container */}
             <div 
-              className="w-64 h-64 border-2 border-[#111] bg-[#1a1a1a] pixelated flex items-center justify-center overflow-hidden relative box-content shadow-[inset_4px_4px_0px_#000]"
+              className="w-48 h-48 xl:w-64 xl:h-64 border-2 border-[#111] bg-[#1a1a1a] pixelated overflow-hidden relative box-content shadow-[inset_4px_4px_0px_#000]"
               style={{
                 transform: `scale(${zoom})`,
-                transition: 'transform 0.1s steps(4)'
+                transition: 'transform 0.1s steps(4)',
+                willChange: 'transform'
               }}
             >
               {iteration && (
@@ -73,8 +74,9 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
                   key={iteration.imageUrl}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: loading ? 0.3 : 1 }}
+                  transition={{ duration: 0.2, ease: "linear" }}
                   src={iteration.imageUrl} 
-                  className="w-full h-full pixelated relative z-10"
+                  className="absolute inset-0 w-full h-full pixelated z-10"
                   alt={`Generated sprite: ${iteration.name}`}
                 />
               )}
@@ -119,7 +121,7 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
                         />
                       ))}
                     </div>
-                    <p className="text-white text-lg font-pixel tracking-tighter uppercase mc-text-shadow animate-pulse">
+                    <p className="text-white text-lg font-pixel uppercase mc-text-shadow animate-pulse">
                       Rendering...
                     </p>
                   </motion.div>
@@ -141,7 +143,7 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
         </div>
 
         {/* Floating Controls */}
-        <div className="absolute -right-14 top-4 flex flex-col gap-2" role="toolbar" aria-label="View Controls">
+        <div className="absolute -right-12 md:-right-14 top-2 md:top-4 flex flex-col gap-2" role="toolbar" aria-label="View Controls">
            <button onClick={() => setZoom(prev => Math.min(prev + 0.5, 3))} className="mc-btn-dark p-2" title="Zoom In" aria-label="Zoom In">
              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
            </button>
@@ -185,7 +187,7 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
             className="w-full max-w-[280px] sm:max-w-md bg-[#1a1a1a] border-2 border-[#333] p-2 flex items-center justify-between gap-2 shadow-[inset_2px_2px_0px_rgba(0,0,0,0.5)]"
           >
               <div className="min-w-0 flex-1 px-2">
-                  <p className="text-[10px] text-[#9ca3af] font-bold uppercase tracking-wider mb-1 font-pixel">{displayLabel}</p>
+                  <p className="text-xs text-[#9ca3af] font-bold uppercase tracking-wider mb-1 font-pixel">{displayLabel}</p>
                   <p className={`text-lg text-[#d4d4d4] font-pixel truncate ${iteration.actionType ? 'text-[#ffff55] font-bold' : ''}`} title={displayText}>
                       {displayText}
                   </p>
@@ -214,7 +216,7 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="w-full space-y-3" 
+            className="w-full space-y-2 md:space-y-3" 
             role="region" 
             aria-labelledby="instant-actions-heading"
           >
@@ -224,29 +226,29 @@ const Artboard: React.FC<ArtboardProps> = ({ iteration, loading, onQuickAction }
                   <div className="h-[2px] flex-1 bg-[#333] border-b border-[#555]"></div>
                </div>
               
-              <div className="flex gap-4 justify-center flex-wrap">
+              <div className="flex gap-2 md:gap-4 justify-center flex-wrap">
                 <button 
                   onClick={() => onQuickAction("Clean up noise. Reduce the total number of colors. Merge stray pixels into clusters. Do not increase detail level.", "Simplify")}
-                  className="mc-btn-dark px-4 py-2 text-lg text-[#52d334] uppercase font-pixel"
+                  className="mc-btn-dark px-3 py-1 md:px-4 md:py-2 text-sm md:text-lg text-[#52d334] uppercase font-pixel"
                 >
                   Simplify
                 </button>
                 <button 
                   onClick={() => onQuickAction("Enforce geometric symmetry on the silhouette. Ensure left and right sides match shape. Maintain top-left lighting.", "Symmetry")}
-                  className="mc-btn-dark px-4 py-2 text-lg text-[#55ffff] uppercase font-pixel"
+                  className="mc-btn-dark px-3 py-1 md:px-4 md:py-2 text-sm md:text-lg text-[#55ffff] uppercase font-pixel"
                   title="Mirrors the LEFT shape to the RIGHT, but preserves shading."
                 >
                   Symmetry
                 </button>
                 <button 
                   onClick={() => onQuickAction("Increase the size of the item. Make it touch the edges of the 16x16 frame. Remove empty padding around the item.", "Maximize")}
-                  className="mc-btn-dark px-4 py-2 text-lg text-[#ffaa00] uppercase font-pixel"
+                  className="mc-btn-dark px-3 py-1 md:px-4 md:py-2 text-sm md:text-lg text-[#ffaa00] uppercase font-pixel"
                 >
                   Maximize
                 </button>
                 <button 
                   onClick={() => onQuickAction("Regenerate the outline using Jappa-style logic (darkened inner colors).", "Fix Outline")}
-                  className="mc-btn-dark px-4 py-2 text-lg text-[#aaffaa] uppercase font-pixel"
+                  className="mc-btn-dark px-3 py-1 md:px-4 md:py-2 text-sm md:text-lg text-[#aaffaa] uppercase font-pixel"
                   title="Programmatically regenerates the border using inner colors."
                 >
                   Fix Outline

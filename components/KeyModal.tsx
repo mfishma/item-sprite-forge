@@ -13,9 +13,15 @@ const KeyModal: React.FC<KeyModalProps> = ({ isOpen, onClose, onSave }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <dialog 
+      open 
+      role="dialog" 
+      aria-modal="true" 
+      aria-labelledby="modal-title"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 m-0 w-full h-full max-w-none max-h-none border-none"
+    >
       <div className="w-full max-w-md mc-panel p-6 bg-[#313233] border-4 border-black shadow-[inset_4px_4px_0px_#555,inset_-4px_-4px_0px_#222]">
-        <h2 className="text-2xl font-pixel text-[#ffff55] mc-text-shadow uppercase mb-4 text-center">
+        <h2 id="modal-title" className="text-2xl font-pixel text-[#ffff55] mc-text-shadow uppercase mb-4 text-center">
           Authentication Required
         </h2>
         
@@ -53,7 +59,7 @@ const KeyModal: React.FC<KeyModalProps> = ({ isOpen, onClose, onSave }) => {
             />
             <div className="flex items-start gap-2 mt-2 px-1">
               <span className="text-[#55ffff] text-sm" role="img" aria-label="shield">🛡️</span>
-              <p className="text-[10px] text-[#888] leading-tight uppercase font-bold tracking-tighter">
+              <p className="text-xs text-[#b3b3b3] leading-tight uppercase font-bold tracking-tighter">
                 Your key is stored <span className="text-[#ffff55]">strictly locally</span> in your browser. 
                 It is sent <span className="text-white">directly to Google</span> and never touches our servers.
               </p>
@@ -77,7 +83,7 @@ const KeyModal: React.FC<KeyModalProps> = ({ isOpen, onClose, onSave }) => {
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 };
 

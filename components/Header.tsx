@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onChangeKey }) => {
   return (
-    <header className="h-16 bg-[#212121] border-b-2 border-black px-6 flex items-center justify-between shrink-0 shadow-lg relative z-20">
+    <header className="py-3 md:py-4 bg-[#212121] border-b-2 border-black px-6 flex items-center justify-between shrink-0 shadow-lg relative z-20">
       <div className="flex items-center gap-4">
         {/* Minecraft Icon Box */}
         <div className="w-10 h-10 bg-[#585858] border-2 border-black flex items-center justify-center relative shadow-[inset_2px_2px_0px_rgba(255,255,255,0.2),inset_-2px_-2px_0px_rgba(0,0,0,0.5)]" aria-hidden="true">
@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onChangeKey }) => {
           <h1 className="text-xl md:text-2xl text-[#ffffff] mc-text-shadow font-display tracking-tight leading-none uppercase">
             ItemSprite Forge
           </h1>
-          <p className="text-[10px] md:text-xs text-[#d4d4d4] font-bold uppercase tracking-wider mt-1 font-pixel">
+          <p className="text-xs text-[#d4d4d4] font-bold uppercase tracking-wider mt-1 font-pixel">
             Vanilla Asset Director <span className="text-[#ffff55]">v1.1</span>
           </p>
         </div>
