@@ -15,8 +15,8 @@ interface SidebarProps {
   refImage?: string;
   clearRefImage: () => void;
   selectedIteration: SpriteIteration | null;
-  onClearSelection: () => void;
-  availableModels: string[];
+  onReset: () => void;
+  availableModels?: string[];
 }
 
 const RANDOM_PROMPTS = [
@@ -31,13 +31,10 @@ const RANDOM_PROMPTS = [
 
 const Sidebar: React.FC<SidebarProps> = ({ 
   params, setParams, prompt, setPrompt, itemName, setItemName, onGenerate, loading, 
-  onFileChange, refImage, clearRefImage, selectedIteration, onClearSelection, availableModels
+  onFileChange, refImage, clearRefImage, selectedIteration, onReset
 }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [evolutionMode, setEvolutionMode] = useState<EvolutionMode>('remix');
-
-  // Check if 3.1 is available
-  const hasHighQualityModel = availableModels.includes('gemini-3.1-flash-image-preview');
 
   // WORKFLOW LOGIC:
   // When switching to 'Variant' (Remix), we pre-fill the prompt with the original prompt
@@ -71,16 +68,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* CONTEXT HEADER */}
       <div className="flex items-center justify-between pb-2 border-b-2 border-[#1e1e1e]">
         <h2 className="text-xl text-[#e0e0e0] font-pixel mc-text-shadow uppercase">
-          {selectedIteration ? 'Context: Editing' : 'Context: New Project'}
+          {selectedIteration ? `Branching V.${selectedIteration.version}` : 'Item Forge'}
         </h2>
         {selectedIteration && (
-           <button 
-             onClick={onClearSelection}
-             className="text-xs text-[#ff5555] hover:text-[#ffaaaa] font-bold uppercase font-pixel"
-             aria-label="Reset context to new project"
-           >
-             [ Reset ]
-           </button>
+          <button 
+            onClick={onReset}
+            className="text-xs text-[#ff5555] hover:text-[#ff8888] font-bold uppercase font-pixel tracking-wider"
+            title="Reset everything and start fresh at V.1"
+            aria-label="Reset workspace to V.1"
+          >
+            [ Reset ]
+          </button>
         )}
       </div>
 
@@ -91,9 +89,13 @@ const Sidebar: React.FC<SidebarProps> = ({
             <img src={selectedIteration.imageUrl} className="w-full h-full object-contain" alt="" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 id="editing-sprite-heading" className="text-lg text-[#ffff55] font-pixel leading-none mb-1">Editing Sprite</h3>
+            <h3 id="editing-sprite-heading" className="text-lg text-[#ffff55] font-pixel leading-none mb-1">
+              Editing V.{selectedIteration.version}
+            </h3>
             <p className="text-xs text-[#d4d4d4] leading-tight font-pixel">
-              Branching from V.{selectedIteration.version}.
+              {evolutionMode === 'remix' 
+                ? 'Variant mode: uses this shape as a reference.' 
+                : 'Touch-up mode: polishes existing pixels.'}
             </p>
           </div>
         </div>
@@ -203,10 +205,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                         onChange={(e) => setParams({...params, material: e.target.value})}
                         className="mc-input p-2 text-lg w-full font-pixel"
                     >
-                        <option value="adaptive">Auto-Material</option>
-                        <option>Gold</option><option>Iron</option><option>Copper</option>
-                        <option>Diamond</option><option>Emerald</option><option>Parchment</option>
-                        <option>Leather</option><option>Netherite</option><option>Wooden</option>
+                        <option value="adaptive">Auto (Infer from prompt / palette)</option>
+                        <option value="Iron">Iron</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Diamond">Diamond</option>
+                        <option value="Netherite">Netherite</option>
+                        <option value="Copper">Copper</option>
+                        <option value="Wood">Wood</option>
+                        <option value="Stone">Stone</option>
+                        <option value="Emerald">Emerald</option>
+                        <option value="Amethyst">Amethyst</option>
+                        <option value="Prismarine">Prismarine</option>
+                        <option value="Obsidian">Obsidian</option>
                     </select>
                   </div>
                   <div>
@@ -217,10 +227,14 @@ const Sidebar: React.FC<SidebarProps> = ({
                         onChange={(e) => setParams({...params, itemType: e.target.value})}
                         className="mc-input p-2 text-lg w-full font-pixel"
                     >
-                        <option value="adaptive">Auto-Type</option>
-                        <option value="weapon">Weapon</option>
-                        <option>Currency</option><option>Jewelry</option>
-                        <option>Scroll</option><option>Music Disc</option><option>Tool</option>
+                        <option value="adaptive">Auto (Infer any item from prompt)</option>
+                        <option value="weapon">Weapon (Sword, Axe, Bow, Trident...)</option>
+                        <option value="tool">Tool (Pickaxe, Shovel, Shears...)</option>
+                        <option value="armor">Armor & Equipment</option>
+                        <option value="resource">Resource (Gem, Ingot, Crystal...)</option>
+                        <option value="food">Food & Organic</option>
+                        <option value="magic">Magic (Potion, Relic, Totem...)</option>
+                        <option value="utility">Utility & Devices (Compass, Key...)</option>
                     </select>
                   </div>
                 </div>
@@ -277,15 +291,40 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <label htmlFor="model-select" className="text-sm font-bold text-[#d4d4d4] uppercase font-pixel">AI Model</label>
                   <select 
                     id="model-select"
-                    value={params.model || 'gemini-2.5-flash-image'}
+                    value={params.model || 'gemini-3.1-flash-image'}
                     onChange={(e) => setParams({...params, model: e.target.value as SpriteParams['model']})}
-                    className="mc-input p-2 text-lg w-full font-pixel"
+                    disabled={!!params.simulateNoKey}
+                    className={`mc-input p-2 text-lg w-full font-pixel ${params.simulateNoKey ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
-                    <option value="gemini-2.5-flash-image">Gemini 2.5 (Fast/Free)</option>
-                    <option value="gemini-3.1-flash-image-preview" disabled={!hasHighQualityModel}>
-                      {hasHighQualityModel ? 'Gemini 3.1 (High Quality)' : 'Gemini 3.1 (Locked - Key Required)'}
-                    </option>
+                    <option value="gemini-3.1-flash-image">Gemini 3.1 Flash Image (1K HQ)</option>
+                    <option value="gemini-3.1-flash-lite-image">Gemini 3.1 Flash Lite (Fast)</option>
+                    <option value="gemini-3-pro-image">Gemini 3 Pro Image (Ultra Detail)</option>
+                    <option value="gemini-2.5-flash-image">Gemini 2.5 Flash Image (Standard / Free Tier)</option>
                   </select>
+                </div>
+
+                <div className="pt-2 border-t border-[#333] flex flex-col gap-1.5">
+                  <label htmlFor="simulate-no-key" className="text-sm font-pixel text-[#aaa] flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      id="simulate-no-key"
+                      checked={!!params.simulateNoKey}
+                      onChange={(e) => setParams({ ...params, simulateNoKey: e.target.checked })}
+                      className="w-4 h-4 accent-[#52d334] cursor-pointer"
+                    />
+                    <span className={params.simulateNoKey ? "text-[#ffff55] font-bold" : ""}>
+                      Simulate No API Key (Free Fallback)
+                    </span>
+                  </label>
+                  {params.simulateNoKey ? (
+                    <p className="text-[11px] text-[#ffff55] font-pixel leading-tight bg-[#222] p-1.5 border border-[#444] rounded-xs">
+                      Key simulation active: Requests bypass Gemini 3 and test offline vanilla asset grounding & synthesis.
+                    </p>
+                  ) : (
+                    <p className="text-[10px] text-[#777] font-pixel leading-tight">
+                      Tip: Gemini 2.5 Flash Image uses standard free tier quota. Check above to test key-free behavior.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -296,7 +335,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* REF IMAGE - Available in New Project OR Variant Mode */}
       {(!selectedIteration || evolutionMode === 'remix') && (
         <section className="space-y-2" aria-labelledby="palette-source-heading">
-          <h2 id="palette-source-heading" className="text-lg text-[#e0e0e0] font-pixel block uppercase">Palette Source</h2>
+          <div className="flex items-center justify-between">
+            <h2 id="palette-source-heading" className="text-lg text-[#e0e0e0] font-pixel block uppercase">Palette Source</h2>
+            <span className="text-xs text-[#888888] font-pixel">Optional</span>
+          </div>
           <div className="relative">
             {refImage ? (
               <div className="relative group mc-panel aspect-video bg-[#111] flex items-center justify-center overflow-hidden">
@@ -325,6 +367,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               </label>
             )}
           </div>
+          <p className="text-xs text-[#a1a1aa] font-pixel leading-tight">
+            Colors custom &amp; fantasy elements. If you explicitly name standard materials in your prompt (e.g. <span className="text-[#ffff55]">&quot;iron base&quot;</span>, <span className="text-[#ffff55]">&quot;wooden handle&quot;</span>), authentic Minecraft colors are preserved for those parts automatically.
+          </p>
         </section>
       )}
 

@@ -1,4 +1,4 @@
-![ItemSprite Forge](./docs/itemsprite_forge_title.png)
+![ItemSprite Forge](./public/logo.png)
 # ItemSprite Forge
 Minecraft asset generation & refinement engine
 
@@ -107,7 +107,18 @@ When a Modder requests a variant, the current sprite is passed explicitly as an 
 
 ---
 
-## 6. License
+## 6. Acknowledgements & Open-Source Attribution
+
+ItemSprite Forge adapts and builds upon techniques pioneered in the open-source pixel art community:
+
+*   **[Retro-Diffusion / pixel-art-fixer](https://github.com/Retro-Diffusion/pixel-art-fixer)**: 
+    *   **Author**: Retro Diffusion / Astropulse
+    *   **License**: MIT License
+    *   **Contribution**: The mathematical 1D spatial derivative profile autocorrelation and consensus phase-offset alignment implemented in `utils/imageProcessing.ts` (`detectGridPhase`) was inspired by and adapted from the open-source grid-detection algorithms in `pixel-art-fixer`. This solves the "AI fake pixel art" phase misalignment problem, preventing uneven pixel widths and jagged diagonal staircase artifacts.
+
+---
+
+## 7. License
 
 Copyright (c) 2026 mfishma
 
@@ -115,4 +126,4 @@ This project is licensed under a custom **Attribution-NonCommercial** license ba
 
 This means that you are free to use, modify, and distribute the code for **personal or educational purposes** as long as you provide visible credit (attribution). However, you **may not use this code for commercial purposes** or monetary gain. 
 
-See the [LICENSE.md](LICENSE.md) file for more details.
+See [LICENSE.md](LICENSE.md) for full license terms and third-party notices.

@@ -5,18 +5,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsx server.ts",
     "build": "vite build",
+    "start": "node server.ts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@google/genai": "^1.35.0",
+    "express": "^5.2.1",
     "motion": "^12.38.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.59.1",
     "@typescript-eslint/parser": "^8.59.1",
@@ -26,6 +29,8 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.23.15",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.59.1",
     "vite": "^6.2.0"

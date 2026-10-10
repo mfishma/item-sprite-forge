@@ -17,8 +17,9 @@ export interface SpriteParams {
   complexity: 'simple' | 'detailed' | 'abstract' | 'adaptive';
   orientation: 'diagonal' | 'vertical' | 'horizontal' | 'frontal' | 'adaptive';
   outlineStyle: 'default' | 'bold' | 'none' | 'adaptive';
-  model: 'gemini-2.5-flash-image' | 'gemini-3.1-flash-image-preview';
+  model?: 'gemini-3.1-flash-image' | 'gemini-3.1-flash-lite-image' | 'gemini-3-pro-image' | 'gemini-2.5-flash-image' | string;
   referenceImage?: string;
+  simulateNoKey?: boolean;
 }
 
 export type EvolutionMode = 'remix' | 'refine';

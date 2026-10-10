@@ -1,5 +1,8 @@
 {
   "name": "ItemSprite Forge",
   "description": "A professional-grade Minecraft item sprite generator that creates 16x16 vanilla-style pixel art using AI, allowing resource pack creators to collaborate as art directors.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
